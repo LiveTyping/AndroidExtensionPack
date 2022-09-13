@@ -3,12 +3,10 @@ The library provides useful extensions for your projects
 
 
 ``` kotlin
-maven { url 'https://jitpack.io' } // add this to your build gradle file
+maven { url 'https://jitpack.io' }
 ```
 
 
 ``` kotlin
-dependencies {
-    implementation 'com.github.LiveTyping:AndroidExtensionPack:version'
-}
+implementation 'com.github.LiveTyping:AndroidExtensionPack:1.0'
 ```
