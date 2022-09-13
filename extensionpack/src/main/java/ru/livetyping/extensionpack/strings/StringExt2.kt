@@ -149,7 +149,7 @@ fun String?.ifNull(mapper: () -> String): String =
     this ?: mapper()
 
 fun String.isHttp(): Boolean {
-    return this.matches(Regex("(http|https)://[^\\s]*"))
+    return this.matches(Regex("(http|https)://\\S*"))
 }
 
 inline fun <reified T : Enum<T>> String.toEnum(by: (enum: T) -> String = { it.name }): T? {
