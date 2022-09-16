@@ -11,7 +11,7 @@ import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.kotlin.addTo
 import ru.livetyping.extensionpack.database.*
 
-fun <T> Flowable<T>?.makeDBCall(
+fun <T : Any> Flowable<T>?.makeDBCall(
     result: MutableLiveData<DBResult<T>>,
     compositeDisposable: CompositeDisposable,
     dropBackPressure: Boolean = false,
@@ -32,7 +32,7 @@ fun <T> Flowable<T>?.makeDBCall(
     }
 }
 
-fun <T> Flowable<T>?.makeDBCallList(
+fun <T : Any> Flowable<T>?.makeDBCallList(
     result: MutableLiveData<DBResult<T>>,
     compositeDisposable: CompositeDisposable,
     dropBackPressure: Boolean = false,
@@ -53,7 +53,7 @@ fun <T> Flowable<T>?.makeDBCallList(
     }
 }
 
-fun <T> Single<T>?.makeDBCall(
+fun <T : Any> Single<T>?.makeDBCall(
     result: MutableLiveData<DBResult<T>>,
     compositeDisposable: CompositeDisposable,
     includeEmptyData: Boolean = false
@@ -66,7 +66,7 @@ fun <T> Single<T>?.makeDBCall(
     })?.addTo(compositeDisposable)
 }
 
-fun <T> Single<T>?.makeDBCallList(
+fun <T : Any> Single<T>?.makeDBCallList(
     result: MutableLiveData<DBResult<T>>,
     compositeDisposable: CompositeDisposable,
     includeEmptyData: Boolean = true
@@ -80,7 +80,7 @@ fun <T> Single<T>?.makeDBCallList(
 
 }
 
-fun <T> Observable<T>?.makeDBCall(
+fun <T : Any> Observable<T>?.makeDBCall(
     result: MutableLiveData<DBResult<T>>,
     compositeDisposable: CompositeDisposable,
     includeEmptyData: Boolean = false
@@ -95,7 +95,7 @@ fun <T> Observable<T>?.makeDBCall(
 
 }
 
-fun <T> Observable<T>?.makeDBCallList(
+fun <T : Any> Observable<T>?.makeDBCallList(
     result: MutableLiveData<DBResult<T>>,
     compositeDisposable: CompositeDisposable,
     includeEmptyData: Boolean = true

@@ -1,17 +1,11 @@
-package com.crazylegend.coroutines
+package ru.livetyping.extensionpack.coroutines
 
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
-import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.*
-import java.util.concurrent.Executors
-import kotlin.concurrent.thread
 
 suspend inline fun <T, R> T.onMain(crossinline block: (T) -> R): R =
     withContext(mainDispatcher) { this@onMain.let(block) }
@@ -23,16 +17,8 @@ suspend inline fun <T> onMain(crossinline block: CoroutineScope.() -> T): T =
 suspend inline fun <T, R> T.nonCancellable(crossinline block: (T) -> R): R =
     withContext(NonCancellable) { this@nonCancellable.let(block) }
 
-suspend inline fun <T> nonCancellable(crossinline block: CoroutineScope.() -> T): T =
-    withContext(NonCancellable) { block.invoke(this@withContext) }
-
-
-suspend inline fun <T> onDefault(crossinline block: CoroutineScope.() -> T): T =
-    withContext(defaultDispatcher) { block.invoke(this@withContext) }
-
 suspend inline fun <T, R> T.onDefault(crossinline block: (T) -> R): R =
     withContext(defaultDispatcher) { this@onDefault.let(block) }
-
 
 suspend inline fun <T, R> T.onIO(crossinline block: (T) -> R): R = withContext(ioDispatcher) { this@onIO.let(block) }
 suspend inline fun <T> onIO(crossinline block: CoroutineScope.() -> T): T =
@@ -173,17 +159,6 @@ inline fun CoroutineScope.nonCancellable(
         function()
     }
 
-suspend fun ByteArray.toBitmapSuspend(): Bitmap? =
-    onIO {
-        return@onIO tryOrNull { BitmapFactory.decodeByteArray(this, 0, size) }
-    }
-
-internal inline fun <T> tryOrNull(block: () -> T): T? = try {
-    block()
-} catch (e: Exception) {
-    null
-}
-
 fun Job?.cancelIfActive() {
     if (this?.isActive == true) {
         cancel()
@@ -249,10 +224,6 @@ fun Fragment.nonCancellableCoroutine(action: suspend (scope: CoroutineScope) -> 
         action(this)
     }
 
-fun highPriorityContext() = Executors.newSingleThreadExecutor { runnable ->
-    thread(priority = Thread.MAX_PRIORITY) { runnable.run() }
-}.asCoroutineDispatcher()
-
 suspend fun doParallel(vararg blocks: suspend () -> Any) = coroutineScope {
     blocks
         .map { async { it() } }
@@ -267,7 +238,3 @@ suspend fun <T> doParallelWithResult(vararg blocks: suspend () -> T) = coroutine
 
     return@coroutineScope result
 }
-
-
-fun View.setOnClickCoroutine(owner: LifecycleOwner, listener: suspend (view: View) -> Unit) =
-    this.setOnClickListener { owner.lifecycleScope.launch { listener(it) } }

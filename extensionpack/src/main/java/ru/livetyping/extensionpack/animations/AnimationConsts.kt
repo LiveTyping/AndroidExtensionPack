@@ -5,27 +5,14 @@ import android.animation.AnimatorListenerAdapter
 import android.animation.ArgbEvaluator
 import android.animation.ValueAnimator
 import android.graphics.drawable.ColorDrawable
-import android.transition.Transition
-import android.transition.TransitionManager
 import android.view.View
-import android.view.ViewGroup
 import android.view.ViewPropertyAnimator
-import android.view.animation.CycleInterpolator
 import androidx.annotation.ColorRes
-import androidx.interpolator.view.animation.FastOutLinearInInterpolator
-import androidx.interpolator.view.animation.FastOutSlowInInterpolator
 import androidx.interpolator.view.animation.LinearOutSlowInInterpolator
 
 object AnimationConstants {
-    const val LICKETY_SPLIT = 150L
-    const val SHORT = 250L
     const val MEDIUM = 400L
-    const val LONG = 600L
-
     val LINEAR_OUT_SLOW_IN by lazy { LinearOutSlowInInterpolator() }
-    val FAST_OUT_SLOW_IN by lazy { FastOutSlowInInterpolator() }
-    val FAST_OUT_LINEAR_IN by lazy { FastOutLinearInInterpolator() }
-    val CYCLE_2 by lazy { CycleInterpolator(2f) }
 }
 
 fun View.rotate(
@@ -56,11 +43,6 @@ fun View.rotateIn(startDelay: Long = 0, build: (ViewPropertyAnimator.() -> Unit)
 fun View.rotateOut(startDelay: Long = 0, build: (ViewPropertyAnimator.() -> Unit)? = null) =
     rotate(rotation = 180, alpha = 0f, startDelay = startDelay, build = build)
 
-fun View.morphTo(target: View, startDelay: Long = 0, build: (ViewPropertyAnimator.() -> Unit)? = null) {
-    this.rotateOut(startDelay, build)
-    target.rotateIn(startDelay, build)
-}
-
 fun colorFade(
     @ColorRes from: Int,
     @ColorRes to: Int,
@@ -81,12 +63,4 @@ fun View.colorFade(@ColorRes from: Int? = null, @ColorRes to: Int, build: (Value
     }
     val fromColor = from ?: (background as ColorDrawable).color
     colorFade(fromColor, to, build) { setBackgroundColor(it) }
-}
-
-fun ViewGroup.transition(transition: Transition? = null) {
-    if (transition != null) {
-        TransitionManager.beginDelayedTransition(this, transition)
-    } else {
-        TransitionManager.beginDelayedTransition(this)
-    }
 }

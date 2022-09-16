@@ -1,4 +1,4 @@
-package com.crazylegend.database.rx
+package ru.livetyping.extensionpack.database.rx
 
 import androidx.lifecycle.MutableLiveData
 import ru.livetyping.extensionpack.rx.ioThreadScheduler
@@ -11,7 +11,7 @@ import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.kotlin.addTo
 import ru.livetyping.extensionpack.database.*
 
-fun <T> Flowable<T>?.makeDBCallPost(
+fun <T : Any> Flowable<T>?.makeDBCallPost(
     result: MutableLiveData<DBResult<T>>,
     compositeDisposable: CompositeDisposable,
     dropBackPressure: Boolean = false,
@@ -32,7 +32,7 @@ fun <T> Flowable<T>?.makeDBCallPost(
     }
 }
 
-fun <T> Flowable<T>?.makeDBCallListPost(
+fun <T : Any> Flowable<T>?.makeDBCallListPost(
     result: MutableLiveData<DBResult<T>>,
     compositeDisposable: CompositeDisposable,
     dropBackPressure: Boolean = false,
@@ -53,7 +53,7 @@ fun <T> Flowable<T>?.makeDBCallListPost(
     }
 }
 
-fun <T> Single<T>?.makeDBCallPost(
+fun <T : Any> Single<T>?.makeDBCallPost(
     result: MutableLiveData<DBResult<T>>,
     compositeDisposable: CompositeDisposable,
     includeEmptyData: Boolean = false
@@ -66,7 +66,7 @@ fun <T> Single<T>?.makeDBCallPost(
     })?.addTo(compositeDisposable)
 }
 
-fun <T> Single<T>?.makeDBCallListPost(
+fun <T : Any> Single<T>?.makeDBCallListPost(
     result: MutableLiveData<DBResult<T>>,
     compositeDisposable: CompositeDisposable,
     includeEmptyData: Boolean = true
@@ -80,7 +80,7 @@ fun <T> Single<T>?.makeDBCallListPost(
 
 }
 
-fun <T> Observable<T>?.makeDBCallPost(
+fun <T : Any> Observable<T>?.makeDBCallPost(
     result: MutableLiveData<DBResult<T>>,
     compositeDisposable: CompositeDisposable,
     includeEmptyData: Boolean = false
@@ -94,7 +94,7 @@ fun <T> Observable<T>?.makeDBCallPost(
     })?.addTo(compositeDisposable)
 }
 
-fun <T> Observable<T>?.makeDBCallListPost(
+fun <T : Any> Observable<T>?.makeDBCallListPost(
     result: MutableLiveData<DBResult<T>>,
     compositeDisposable: CompositeDisposable,
     includeEmptyData: Boolean = true

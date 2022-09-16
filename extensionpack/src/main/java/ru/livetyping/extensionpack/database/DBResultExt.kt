@@ -157,10 +157,10 @@ inline val <T> LiveData<DBResult<T>>.getSuccess: T?
     }
 
 internal inline fun <T, R> T.isListAndNotNullOrEmpty(actionFalse: () -> R, actionTrue: () -> R): R =
-    if (this is List<*> && this.isNotEmpty()) actionTrue() else actionFalse()
+    if ((this is List<*>) && this.isNotEmpty()) actionTrue() else actionFalse()
 
 internal inline fun <T, R> T.isListAndIsNullOrEmpty(actionFalse: () -> R, actionTrue: () -> R): R =
-    if (this is List<*> && this.isEmpty()) actionTrue() else actionFalse()
+    if ((this is List<*>) && this.isEmpty()) actionTrue() else actionFalse()
 
 fun <T> MutableStateFlow<DBResult<T>>.querying() {
     value = databaseQuerying
