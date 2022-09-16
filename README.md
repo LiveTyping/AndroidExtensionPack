@@ -40,4 +40,19 @@ betterAnimation.visibleChildId = second.id <- вызов из кода
 
 # Биометрия
 > Эти функции позволют работать с биометрией на смартфоне и контролировать такие кейсы как: возможна ли биометрия в принципе, запрашивать доступ (отпечаток пальца, снимок лица)
-- **biometricAuth**
+- **biometricAuth** - функция возращает объект *BiometricPrompt* (содержит результат биометрии), принимает 4 метода: *promptInfo* (передаем объект **BiometricPrompt.PromptInfo**, содержит информацию о том какой тип биометрии вы запрашиваете), *onAuthFailed* (действие, если запрос упал), *onAuthError, onAuthSuccess* (дейсвтие, если произошла ошибка или запрос выполнялся успешно). Функция может быть вызвана как от *Activity* так и от *Fragment*.
+- **canAuthenticate** - функция может быть вызвана как от *Activity* так и от *Fragment*. Содержит три основных параметра, внутри которых следует реализовать логику отслеживания события. Например *hardwareUnavailable* говорит о том, что на смартфоне нет возможности работы с биометрией на хардверном уровне. Эта лямбда будет вызвана только в том случае, если это действительно так. Также в методе содержаться еще две лямбды: *securityUpdateNeeded, noFingerprintsEnrolled* на устройстве не настроена биоментрия и отпечаток пальца не был распознан соответственно.
+
+# Корутины
+> Эти функции позволют работать с многопоточностью
+- **makeIOCall** - может быть вызвана из *ViewModel, CoroutineScope*. Нужна для запросов в интернет. Содержит 4 параметра, поведение которых можно определить: *onCallExecuted* (вызывается после завершения вызова), *onErrorAction* (вызывается при ошибке), *ioCall* (сам запрос), *onCalled* (возращает результат своей работы в виде модели)
+- **onMain** - запускает код в главном потоке
+- **onDefault** - запускает код в основном потоке
+- **onIO** - запускает код в отдельном потоке, но без дополнительных слушателей
+- **ioCoroutineGlobal, mainCoroutineGlobal, defaultCoroutineGlobal, unconfinedCoroutineGlobal** - запускает код глобально для всего приложения в различных потоках
+- **withMainContext, withIOContext, withDefaultContext, withUnconfinedContext, withNonCancellableContext** - запуск кода в определенном контексте
+- **viewModelIOCoroutine, viewModelMainCoroutine, viewModelDefaultCoroutine, viewModelUnconfinedCoroutine, viewModelNonCancellableCoroutine** - запускается от объекта *ViewModel* для различных потоков
+- **main, io, default, unconfined, nonCancellable** - запускается от объекта *CoroutineScope* для различных потоков
+- **cancelIfActive** - завершает *Job*, если активна
+- **ioCoroutine, mainCoroutine, unconfinedCoroutine, defaultCoroutine, nonCancellableCoroutine** - запускает код в разных потоках как от *Fragemnt* так и от *AppCompatActivity*
+- **doParallel, doParallelWithResult** - делает параллельный запрос с результатом и без
