@@ -82,3 +82,19 @@ fadeOut
 - **cancelIfActive** - завершает *Job*, если активна
 - **ioCoroutine, mainCoroutine, unconfinedCoroutine, defaultCoroutine, nonCancellableCoroutine** - запускает код в разных потоках как от *Fragment* так и от *AppCompatActivity*
 - **doParallel, doParallelWithResult** - делает параллельный запрос с результатом и без
+
+# Работа с БД
+Все модели должны быть дополнительно обернуты в дата класс *DBResult*:
+``` kotlin
+sealed class DBResult<out T> {
+    data class Success<T>(val value: T) : DBResult<T>()
+    object Querying : DBResult<Nothing>()
+    object EmptyDB : DBResult<Nothing>()
+    data class DBError(val throwable: Throwable) : DBResult<Nothing>()
+}
+```
+Далее список функций, которые можно использовать как при работе с корутинами так и с RX. Их можно использовать как от *ViewModel* так и от *CoroutineScope*
+## Корутины
+- **makeDBCallLiveData** - принимает запрос и возращает лайвдату с оберткой *DBResult*
+- 
+## RX
