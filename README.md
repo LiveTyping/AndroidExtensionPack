@@ -27,8 +27,7 @@ implementation 'com.github.LiveTyping:AndroidExtensionPack:1.0'
         
 betterAnimation.visibleChildId = second.id <- вызов из кода
 ```
-- Extensions функции от **View**
-> Эти функции позволяют изменять положение компонента по разным осям, далее будет описано какие методы можно использовать
+- Extensions функции от **View**. Позволяют изменять положение компонента по разным осям, далее будет описано какие методы можно использовать
 
 ``` kotlin
 rotate
