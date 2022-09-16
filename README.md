@@ -54,5 +54,5 @@ betterAnimation.visibleChildId = second.id <- вызов из кода
 - **viewModelIOCoroutine, viewModelMainCoroutine, viewModelDefaultCoroutine, viewModelUnconfinedCoroutine, viewModelNonCancellableCoroutine** - запускается от объекта *ViewModel* для различных потоков
 - **main, io, default, unconfined, nonCancellable** - запускается от объекта *CoroutineScope* для различных потоков
 - **cancelIfActive** - завершает *Job*, если активна
-- **ioCoroutine, mainCoroutine, unconfinedCoroutine, defaultCoroutine, nonCancellableCoroutine** - запускает код в разных потоках как от *Fragemnt* так и от *AppCompatActivity*
+- **ioCoroutine, mainCoroutine, unconfinedCoroutine, defaultCoroutine, nonCancellableCoroutine** - запускает код в разных потоках как от *Fragment* так и от *AppCompatActivity*
 - **doParallel, doParallelWithResult** - делает параллельный запрос с результатом и без
