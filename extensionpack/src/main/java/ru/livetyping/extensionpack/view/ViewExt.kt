@@ -6,27 +6,21 @@ import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
-import android.graphics.drawable.GradientDrawable
 import android.os.Build
 import android.os.SystemClock
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
-import androidx.annotation.*
+import androidx.annotation.ColorRes
+import androidx.annotation.DrawableRes
+import androidx.annotation.RequiresApi
+import androidx.annotation.StringRes
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.DrawableCompat
 import com.google.android.material.tabs.TabLayout
-import ru.livetyping.extensionpack.dpToPx
 import java.time.LocalDate
 
 const val FAST_CLICK_DELAY = 500L
-
-fun View.addKeyBoardStateCallback(isOpened: (Boolean) -> Unit) {
-    viewTreeObserver.addOnGlobalLayoutListener {
-        val heightDiff = rootView.height - height
-        isOpened(heightDiff > 200.dpToPx())
-    }
-}
 
 fun View.setOnClickListenerWithTimeout(callback: () -> Unit) {
     var lastClickTime: Long = 0
@@ -103,40 +97,6 @@ inline fun TabLayout.addOnTabSelectedListener(
     addOnTabSelectedListener(listener)
     return listener
 }
-
-fun View.setGradientDrawable(
-    @ColorRes startColorRes: Int,
-    @ColorRes endColorRes: Int,
-    orientation: GradientDrawable.Orientation,
-    radius: Float = 0F
-) {
-    setGradientDrawableFromColor(
-        intArrayOf(
-            ContextCompat.getColor(context, startColorRes),
-            ContextCompat.getColor(context, endColorRes)
-        ),
-        orientation,
-        radius
-    )
-}
-
-fun View.setGradientDrawableFromColor(
-    @ColorInt colors: IntArray,
-    orientation: GradientDrawable.Orientation,
-    radius: Float = 0F
-) {
-    background = getGradientDrawable(colors, orientation, radius)
-}
-
-fun View.getGradientDrawable(
-    @ColorInt colors: IntArray,
-    orientation: GradientDrawable.Orientation,
-    radius: Float = 0F
-) = GradientDrawable(orientation, colors).apply { cornerRadius = radius }
-
-@Nullable
-fun getDrawableResIdByName(context: Context, drawableName: String) =
-    context.resources.getIdentifier(drawableName, "drawable", context.packageName)
 
 fun View.getDrawable(@DrawableRes drawableRes: Int) = ContextCompat.getDrawable(context, drawableRes)
 

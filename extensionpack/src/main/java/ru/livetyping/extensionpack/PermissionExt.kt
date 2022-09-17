@@ -12,7 +12,7 @@ inline fun Fragment.askForMultiplePermissions(
     crossinline onPermissionsGranted: () -> Unit = {}
 ): ActivityResultLauncher<Array<String>> =
     registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { result ->
-        val granted = result.map { it.value }.filter { it == false }
+        val granted = result.map { it.value }.filter { !it }
         if (granted.isEmpty()) {
             onPermissionsGranted()
         } else {
@@ -25,7 +25,7 @@ inline fun FragmentActivity.askForMultiplePermissions(
     crossinline onPermissionsGranted: () -> Unit = {}
 ): ActivityResultLauncher<Array<String>> =
     registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { result ->
-        val granted = result.map { it.value }.filter { it == false }
+        val granted = result.map { it.value }.filter { !it }
         if (granted.isEmpty()) {
             onPermissionsGranted()
         } else {

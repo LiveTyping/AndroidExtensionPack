@@ -37,10 +37,3 @@ fun TabLayout.setIcons(@DrawableRes icons: Array<Int>) {
     for (i in 0 until tabCount) get(i).icon = ContextCompat.getDrawable(context, icons[i])
     tint()
 }
-
-fun TabLayout.setIcons(icons: TypedArray) {
-    for (i in 0 until tabCount) get(i).icon = icons.getDrawable(i)
-    tint()
-}
-
-fun TabLayout.getTabViewAt(position: Int) = (getChildAt(0) as ViewGroup).getChildAt(position)

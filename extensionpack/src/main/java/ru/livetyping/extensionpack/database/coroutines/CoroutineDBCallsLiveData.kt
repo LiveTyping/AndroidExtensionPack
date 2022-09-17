@@ -118,22 +118,6 @@ fun <T> CoroutineScope.makeDBCall(
     }
 }
 
-fun <T> CoroutineScope.makeDBCallList(
-    queryModel: T?,
-    dbResult: MutableLiveData<DBResult<T>>,
-    includeEmptyData: Boolean = true
-): Job {
-    dbResult.queryingPost()
-    return launch(ioDispatcher) {
-        try {
-            dbResult.subscribeListPost(queryModel, includeEmptyData)
-        } catch (t: Throwable) {
-            dbResult.callErrorPost(t)
-        }
-    }
-
-}
-
 fun <T> ViewModel.makeDBCall(
     dbResult: MutableLiveData<DBResult<T>>,
     includeEmptyData: Boolean = false,
@@ -143,21 +127,6 @@ fun <T> ViewModel.makeDBCall(
     return viewModelIOCoroutine {
         try {
             dbResult.subscribePost(dbCall())
-        } catch (t: Throwable) {
-            dbResult.callErrorPost(t)
-        }
-    }
-}
-
-fun <T> ViewModel.makeDBCallList(
-    dbResult: MutableLiveData<DBResult<T>>,
-    includeEmptyData: Boolean = true,
-    dbCall: suspend () -> T?
-): Job {
-    dbResult.queryingPost()
-    return viewModelIOCoroutine {
-        try {
-            dbResult.subscribeListPost(dbCall(), includeEmptyData)
         } catch (t: Throwable) {
             dbResult.callErrorPost(t)
         }
@@ -192,23 +161,6 @@ fun <T> CoroutineScope.makeDBCall(
     return launch(ioDispatcher) {
         try {
             dbResult.subscribePost(dbCall())
-        } catch (t: Throwable) {
-            dbResult.callErrorPost(t)
-
-        }
-    }
-}
-
-fun <T> CoroutineScope.makeDBCallList(
-    dbResult: MutableLiveData<DBResult<T>>,
-    includeEmptyData: Boolean = true,
-    dbCall: suspend () -> T?
-): Job {
-    dbResult.queryingPost()
-
-    return launch(ioDispatcher) {
-        try {
-            dbResult.subscribeListPost(dbCall(), includeEmptyData)
         } catch (t: Throwable) {
             dbResult.callErrorPost(t)
 

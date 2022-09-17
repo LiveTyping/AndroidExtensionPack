@@ -1,11 +1,8 @@
 package ru.livetyping.extensionpack
 
 import android.content.Context
-import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
-import android.util.Base64
 import android.view.View
-import android.widget.ImageView
 import androidx.appcompat.widget.AppCompatImageView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.RequestBuilder
@@ -99,13 +96,6 @@ fun AppCompatImageView.loadImgNoCache(imgUrl: Any?, error: Int, placeHolder: Int
         .into(this)
 }
 
-fun Context.loadImgWithTransformation(imgUrl: Any?, view: AppCompatImageView, transformation: RequestOptions) {
-    Glide.with(this)
-        .applyDefaultRequestOptions(transformation)
-        .load(imgUrl)
-        .into(view)
-}
-
 fun View.loadImg(imgUrl: Any?, view: AppCompatImageView) {
     Glide.with(this)
         .load(imgUrl)
@@ -172,14 +162,6 @@ fun AppCompatImageView.loadImgNoCache(image: Any?) {
         .into(this)
 }
 
-
-fun View.loadImgWithTransformation(imgUrl: Any?, view: AppCompatImageView, transformation: RequestOptions) {
-    Glide.with(this)
-        .applyDefaultRequestOptions(transformation)
-        .load(imgUrl)
-        .into(view)
-}
-
 fun AppCompatImageView.loadImgNoCache(image: Any?, options: () -> BaseRequestOptions<*>) {
     Glide.with(this)
         .load(image)
@@ -228,74 +210,4 @@ fun View.loadImage(
         .load(image)
         .thisStuff()
         .into(appCompatImageView)
-}
-
-fun ImageView.loadBase64Image(base64Image: String?) {
-    base64Image?.let {
-        Glide.with(context)
-            .asBitmap()
-            .load(Base64.decode(base64Image, Base64.DEFAULT))
-            .into(this)
-    }
-}
-
-sealed class Transformation {
-    object CenterCrop : Transformation()
-    object Circle : Transformation()
-}
-
-private fun ImageView.loadImage(imageResource: Any, skipMemoryCache: Boolean, transformation: Transformation?) {
-    var requestOptions = RequestOptions()
-        .skipMemoryCache(skipMemoryCache)
-
-    requestOptions = when (transformation) {
-        is Transformation.CenterCrop -> requestOptions.centerCrop()
-        is Transformation.Circle -> requestOptions.circleCrop()
-        else -> requestOptions // Do nothing
-    }
-
-    Glide.with(context)
-        .load(imageResource)
-        .apply(requestOptions)
-        .into(this)
-}
-
-fun ImageView.loadImageResource(
-    imageResource: String?,
-    skipMemoryCache: Boolean = false,
-    transformation: Transformation? = null
-) {
-    imageResource?.let {
-        loadImage(it, skipMemoryCache, transformation)
-    }
-}
-
-fun ImageView.loadImageResource(
-    imageResource: Int?,
-    skipMemoryCache: Boolean = false,
-    transformation: Transformation? = null
-) {
-    imageResource?.let {
-        loadImage(it, skipMemoryCache, transformation)
-    }
-}
-
-fun ImageView.loadImageResource(
-    imageResource: Bitmap?,
-    skipMemoryCache: Boolean = false,
-    transformation: Transformation? = null
-) {
-    imageResource?.let {
-        loadImage(it, skipMemoryCache, transformation)
-    }
-}
-
-fun ImageView.loadImageResource(
-    imageResource: Drawable?,
-    skipMemoryCache: Boolean = false,
-    transformation: Transformation? = null
-) {
-    imageResource?.let {
-        loadImage(it, skipMemoryCache, transformation)
-    }
 }
