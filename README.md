@@ -165,4 +165,42 @@ fun CharSequence.isMatch(regex: String) = Regex(regex).matches(this) <- вызо
 
 # View
 > Работа с TabView, View и прочими штуками, которые относятся к визуальному представлению
-- ****
+- **get** - принимает номер таба, возрашает объект *TabLayout.Tab*
+- **tint** - принимает следующие параметры: *selectedPosition* (номер таба), *selectedColor, defaultColor* (цвет тинта)
+- **hideTitles** - скрывает подписи
+- **setIcons** - устанавливает иконки
+- **setOnClickListenerWithTimeout** - вешает слушатель с задержкой
+- **setMargins** - устанавливает отступы
+- **hideKeyboard** - скрывает клавиатуру
+- **tint, tintBackgroundDrawable** - устанавливает тинт, принимает в качестве параметров контекст и цвет тинта
+- **doOnTabSelected** - вызывает дейсвтие при нажатии на таб
+- **addOnTabSelectedListener** - ставит слушатель на нажатие по табам
+- **getDrawable** - возращает дравабл из ресурса
+- **getString** - возрашает строку из ресурса
+- **showDatePickerDialog** - отображает диалог для выбора времени
+- **toBitmap** - трансформирует *Drawable* в *Bitmap*
+- **visible, invisible** - делает *View* видимой или невидимой
+- **ifVisible, ifInvisible, ifGone** - делает что-то при заданных условиях видимости
+- **showIf** - отображает при заданных условиях
+- **enableIf, disableIf, hideIf** - проделывает действия, если условие трушное
+
+# Activity
+> Работа с активити и в целом компонентами приложения
+- **setDarkStatusBarIcons, setLightStatusBarIcons** - устанавливает цвет статус бара
+- **getPhotoFromGallery, getPhotoFromCamera** - запрос на получение фото из галереи или камеры
+- **getUriForImageFile, getUriForVideoFile** - получение *Uri* из фото или видео
+- **shareText, shareImage, shareMedia** - делится текстов, фото, медиа файлами в другие приложения
+- **openBrowser, openMailClient** - открывает браузер или почтовый клиент
+- **hideSoftKeyboard, showKeyboard** - скрывает, показывает клавиатуру
+- **enterFullScreenMode, exitFullScreenMode** - переходит, выходит из полноэкранного режима
+- **startActivityForResult** - получение результата из другого активити
+- **alert** - вызывает алерт, нужно передать только его внешний вид
+- **launchActivity** - запускает новое активити
+- **newIntent** - открывает новый интент
+- **setBackgroundColor** - устанавливает фон
+- **hideBottomBar, showBottomBar** - скрывает, показывает нижнее навигационное меню
+- **lockOrientation, lockCurrentScreenOrientation, unlockScreenOrientation** - работа с ориентацией экрана
+- **getBitmapFromUri** - получение битмапа из *Uri*
+- **setupToolbar** - устанавливает тулбар
+- **setTransparentStatusBarFlags** - делает статус бар прозрачным
+- **screenShot** - делает скриншот
