@@ -204,3 +204,99 @@ fun CharSequence.isMatch(regex: String) = Regex(regex).matches(this) <- вызо
 - **setupToolbar** - устанавливает тулбар
 - **setTransparentStatusBarFlags** - делает статус бар прозрачным
 - **screenShot** - делает скриншот
+
+# Bitmap
+> Зачастую на разных телефонах снимок с камеры возращается повернутным под каким-то углом, чтобы этого не происходило воспользуемся функцией:
+- **checkAndRotateBitmap** - принимает контекст и *Uri*, возращает правильный *Bitmap*
+
+# Collections
+> Работа со списками, коллекциями
+- **addOrReplace** - добавляем в коллекцию данные или заменяет уже сущетсвующие, если они присутсвуют
+- **addAnd** - добавляет данные в коллекцию и возращает обновленную
+- **removeDuplicates** - удаляет дублирующиеся элементы коллекции
+- **addIfNotExist** - *infix* функция, которая добавит данные, если они не присутсвуют в коллекции
+- **swap, swapAsList** - полезно для *RecyclerView*
+
+# Всячиские проверки
+> Тут содержатся функции для разного рода проверок в коде
+- **orElse** - возращает элемент, от которого была вызвана функция, если они не *null* или другой в противном случае (передается в качестве параметра)
+- **ifTrue, ifFalse** - если выражение не тру, фолс, то вызывается функция переданная в параметрах
+- **isOnline** - вызывается от контекста, возращает тру, фолс
+- **alsoIfTrue, alsoIfFalse** - делает что-то после проверки условия
+- **tryOrNull, tryOrElse, applyIf, letIf, runIf, alsoIf, withIf** - ряд функций, которые будут запущены, но в случае *null* будут делать что-то иное
+- **allIsNotNull, allIsEqual** - возращает бул после проверки
+
+# Context функции
+> Функции, которые должны быть вызваны от контекста
+- **isPermissionsNotGranted** - принимает список разрешений и возращает бул
+- **makeCall** - принимает номер телефона и открывает приложение для звонков
+- **showDatePicker, showTimePicker** - открывает пикеры для выбора времени, даты
+- **quantityString** - возращает строку с несколькими переменными
+- **isDarkTheme** - говорит темная тема или нет сейчас на устройстве
+- **rateUs** - переведет пользователя в *Google Play* на страницу приложения
+
+# Работа с датой
+> Далее будет представлен список констант и функций для взаимодействия с датой в проектах
+``` kotlin
+const val DATE_PATTERN_DAY_MONTH_DAY_WEEK = "dd MMMM, EEEE" - день, месяц с указанием дня недели
+
+const val TIME_DAY_PATTERN = "HH:mm dd.MM.yyyy" - паттерн даты с часами, минутами, днем, месяцем, и годом
+
+const val DATE_PATTERN_DATE_TIME = "dd.MM.yyyy HH:mm" - паттерн даты с днем, месяцем, годом, часами и минутами
+
+const val DATE_PATTERN_YEAR_MONTH_DAY_DASH = "yyyy-MM-dd" - год, месяц, день
+
+const val YEAR_MONTH_DAY_DOT_PATTERN = "yyyy.MM.dd"
+
+const val DAY_MONTH_YEAR_PATTERN = "dd.MM.yyyy"
+
+const val DAY_MONTH_YEAR_WEEK_PATTERN = "dd.MM.yyyy EE"
+
+const val DAY_FULL_MONTH_YEAR_PATTERN = "dd MMMM yyyy"
+
+const val DATE_PATTERN_FULL_MONTH_YEAR_PATTERN = "MMMM yyyy"
+
+const val DATE_PATTERN_DAY_SHORT_MONTH = "dd MMM"
+
+const val YEAR_MONTH_DAY_PATTERN = "yyyy-MM-dd"
+
+const val DATE_PATTERN_TIME = "HH:mm"
+
+const val DATE_PATTERN_DAY_MONTH = "d MMMM"
+```
+
+- **getFormatDate** - форматирует дату по паттерну, который передается параметром. Функция вызывается от *Date*
+- **getDate** - вызывается от строки, при помощи паттерна возращает дату
+- **getLocalDate, getLocalDateTime, getLocalDateTimeWithTimeZone** - возращает текущию дату
+- **getFormatDate, getDate** - вызывается от *LocalDate*, форматирует или просто возращает дату
+- **toLocalDate, toLocalDateTime** - функции вызываются от *Date* и трансформируют *Date* в *LocalDate*
+
+# EditText
+> Работа с компонентом и его жизненным циклом
+- **addTextChangedListener** - устанавливает слушатель, в качестве параметров принимает действие и возращает строку
+- **addDoneListener** - ставит слушатель на нажатие физической клавишы *Done*
+- **setFocusListener** - устанавливает слушатель на фокус
+
+# Glide
+> Работа с библиотекой
+- **loadImg, loadImgNoCache** - загружает изображение в *ImageView*, для этого в качестве параметров нужно передать следующие параметры: *imgUrl* (ссылка на картинку), *view* (id компонента), *error* (изображение, которое будет отображено при ошибке), *placeHolder* (заглушка, которая будет показана при загрузке). Обе функции можно вызвать от *Context, View, AppCompatImageView, ImageView*
+
+# Permission
+> Работа с разрешениями, могут быть вызваны от *FragmentActivity, Fragment*
+- **askForMultiplePermissions, askForSinglePermission** - запрос на несколько или одно разрешение
+- **getForegroundLocationPermission, getBackgroundLocationPermission** - получение запроса на разрешения доступа к локации
+- **getCameraPermission** - получение доступа к камере
+
+# Полезная функция при работе с фото
+- **flipImageHorizontally, flipImageVertically** - переворачивает фото вертикально или горизонально
+
+# ViewPager
+> Работа с компонентом
+- **listener** - устанавливает слушатель, содержит всего три лямбды: *onPageScrollStateChanged* (вызывается при скролле), *onPageSelected* (вызывается при выборе экрана), *onPageScrolled* (вызывается при скролле)
+- **back, forward** - перемещение по экранам
+- **isOnLastPage, isOnFirstPage** - возращает бул, если экран последний или первый
+- **goPrevious, goNext** - перемещение по экранам
+- **syncScrolling** - синхронизается двух *ViewPager* между собой
+- **setFragmentAdapter** - устанавливает адаптер
+- **doOnPageSelected** - вызывается при выборе экрана
+- **setShowSideItems** - показывает кусочек след. экрана
